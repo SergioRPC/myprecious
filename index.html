@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>🎁 Lista de Casamento</title>
+
+<!-- BIBLIOTECA QR CODE -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #0f0f0f, #4b0082);
+  color: white;
+  margin: 0;
+}
+
+#bloqueio {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #000, #4b0082);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fade {
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.9);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+input {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px;
+  text-align: center;
+}
+
+button {
+  background: linear-gradient(45deg, purple, violet);
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.whats {
+  color: #25D366;
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+#conteudo {
+  display: none;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 12px;
+}
+
+.produto {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.produto:hover {
+  transform: scale(2.5);
+}
+
+.info {
+  text-align: left;
+}
+
+.comprado {
+  background: green !important;
+}
+
+#cursor {
+  position: fixed;
+  width: 40px;
+  pointer-events: none;
+  z-index: 999;
+  display: none;
+}
+
+/* QR */
+#qrcode {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="bloqueio" class="fade">
+  <h1>🔒 Acesso à Lista</h1>
+  <p>Solicite seu código no WhatsApp</p>
+
+  <input id="codigo" placeholder="Digite seu código">
+  <button onclick="validar()">Entrar</button>
+
+  <a class="whats"
+     href="https://wa.me/5511989163463?text=Olá,%20quero%20o%20código%20da%20lista"
+     target="_blank">
+     📲 Pedir código no WhatsApp
+  </a>
+</div>
+
+<div id="conteudo">
+
+  <h1>🎁 Lista de Casamento</h1>
+
+  <!-- QR CODE -->
+  <div id="qrcode"></div>
+
+  <div class="container">
+
+    <!-- GELADEIRA -->
+    <div class="item">
+      <img src="Geladeira/Geladeira.gif" class="produto">
+      <div class="info">
+        <strong>Geladeira Duplex Inox</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- TV -->
+    <div class="item">
+      <img src="Tv/Tv.gif" class="produto">
+      <div class="info">
+        <strong>Smart TV 50"</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- FOGÃO -->
+    <div class="item">
+      <img src="Fogao/Fogao.gif" class="produto">
+      <div class="info">
+        <strong>Fogão</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- MESA -->
+    <div class="item">
+      <img src="Mesa/Mesa.gif" class="produto">
+      <div class="info">
+        <strong>Mesa</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- MICROONDAS -->
+    <div class="item">
+      <img src="Microondas/Microondas.gif" class="produto">
+      <div class="info">
+        <strong>Microondas</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- PANELAS -->
+    <div class="item">
+      <img src="Panelas/Panelas.gif" class="produto">
+      <div class="info">
+        <strong>Panelas</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- PIX -->
+    <div class="item">
+      <img src="Pix/Pix.gif" class="produto">
+      <div class="info">
+        <strong>Pix</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- SOFÁ -->
+    <div class="item">
+      <img src="Sofa/Sofa.gif" class="produto">
+      <div class="info">
+        <strong>Sofá</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <!-- TANQUINHO -->
+    <div class="item">
+      <img src="Tanquinho/Tanquinho.GIF" class="produto">
+      <div class="info">
+        <strong>Tanquinho</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<img src="Mouse/Aliancas move.gif" id="cursor">
+
+<script>
+
+/* CÓDIGOS */
+const codigos = {
+  "Carlos": "9999",
+  "Maria": "1234",
+  "João": "5678"
+};
+
+let usuarioAtual = "";
+
+/* LOGIN */
+function validar() {
+  let input = document.getElementById("codigo").value.trim();
+
+  for (let nome in codigos) {
+    if (codigos[nome] === input) {
+
+      usuarioAtual = nome;
+
+      document.getElementById("bloqueio").style.display = "none";
+      document.getElementById("conteudo").style.display = "block";
+
+      gerarQR(nome, input);
+
+      return;
+    }
+  }
+
+  alert("Código inválido!");
+}
+
+/* QR CODE */
+function gerarQR(nome, codigo) {
+  let texto = `Presente de casamento\nConvidado: ${nome}\nCódigo: ${codigo}`;
+
+  document.getElementById("qrcode").innerHTML = "";
+
+  QRCode.toCanvas(texto, function (err, canvas) {
+    document.getElementById("qrcode").appendChild(canvas);
+  });
+}
+
+/* BOTÃO */
+function marcar(btn) {
+  btn.innerText = "Comprado";
+  btn.classList.add("comprado");
+}
+
+/* CURSOR */
+const cursor = document.getElementById("cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.pageX + "px";
+  cursor.style.top = e.pageY + "px";
+});
+
+document.querySelectorAll("a, button, img").forEach(el => {
+  el.addEventListener("mouseenter", () => cursor.style.display = "block");
+  el.addEventListener("mouseleave", () => cursor.style.display = "none");
+});
+
+</script>
+
+</body>
+</html>

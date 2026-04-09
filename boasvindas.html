@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>💍 Bem-vindo</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #0f0f0f, #4b0082);
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+/* MENSAGEM */
+.mensagem {
+  font-size: 22px;
+  margin-bottom: 40px;
+  animation: fade 1.5s ease;
+}
+
+@keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* BOTÃO */
+.botao {
+  display: inline-block;
+  background: purple;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* SETA ROXA */
+.seta {
+  font-size: 40px;
+  color: violet;
+  animation: bounce 1s infinite;
+  margin-top: 20px;
+}
+
+@keyframes bounce {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(10px);}
+  100% {transform: translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="mensagem" id="msg"></div>
+
+<a id="link" class="botao">🎁 Acessar Lista de Presentes</a>
+
+<div class="seta">⬇️</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const nome = params.get("user") || "Convidado";
+
+document.getElementById("msg").innerHTML =
+`💍 Olá ${nome}!<br><br>
+Estamos muito honrados em tê-lo como padrinho ❤️<br><br>
+Preparamos algo especial para você:`;
+
+// LINK PARA SEU SITE PRINCIPAL
+document.getElementById("link").href =
+"index.html?user=" + nome;
+</script>
+
+</body>
+</html>
