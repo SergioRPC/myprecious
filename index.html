@@ -5,8 +5,6 @@
 <title>🎁 Lista de Casamento</title>
 
 <style>
-
-/* ===== ESTILO GERAL ===== */
 body {
   font-family: Arial;
   background: linear-gradient(135deg, #0f0f0f, #4b0082);
@@ -14,7 +12,6 @@ body {
   margin: 0;
 }
 
-/* ===== BLOQUEIO ===== */
 #bloqueio {
   position: fixed;
   width: 100%;
@@ -26,7 +23,6 @@ body {
   align-items: center;
 }
 
-/* ANIMAÇÃO */
 .fade {
   animation: fadeIn 1s ease forwards;
 }
@@ -36,7 +32,6 @@ body {
   to {opacity: 1; transform: scale(1);}
 }
 
-/* INPUT */
 input {
   padding: 12px;
   border-radius: 8px;
@@ -45,7 +40,6 @@ input {
   text-align: center;
 }
 
-/* BOTÃO */
 button {
   background: linear-gradient(45deg, purple, violet);
   border: none;
@@ -53,34 +47,28 @@ button {
   color: white;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.1);
 }
 
-/* WHATS */
 .whats {
   color: #25D366;
   margin-top: 15px;
   text-decoration: none;
-  font-weight: bold;
 }
 
-/* ===== CONTEÚDO ===== */
 #conteudo {
   display: none;
   padding: 20px;
 }
 
-/* CONTAINER */
 .container {
   max-width: 900px;
   margin: auto;
 }
 
-/* ITEM */
 .item {
   display: flex;
   align-items: center;
@@ -91,12 +79,10 @@ button:hover {
   border-radius: 12px;
 }
 
-/* IMAGEM */
 .produto {
   width: 120px;
   height: 120px;
   object-fit: cover;
-  transition: 0.4s;
   cursor: pointer;
 }
 
@@ -104,17 +90,14 @@ button:hover {
   transform: scale(2.5);
 }
 
-/* TEXTO */
 .info {
   text-align: left;
 }
 
-/* BOTÃO COMPRADO */
 .comprado {
   background: green !important;
 }
 
-/* ===== CURSOR ANIMADO ===== */
 #cursor {
   position: fixed;
   width: 40px;
@@ -122,59 +105,99 @@ button:hover {
   z-index: 999;
   display: none;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- 🔒 LOGIN -->
 <div id="bloqueio" class="fade">
-
   <h1>🔒 Acesso à Lista</h1>
   <p>Solicite seu código no WhatsApp</p>
 
   <input id="codigo" placeholder="Digite seu código">
-
   <button onclick="validar()">Entrar</button>
 
   <a class="whats"
-     href="https://wa.me/5511989163463?text=Olá,%20quero%20o%20código%20da%20lista%20de%20casamento"
+     href="https://wa.me/5511989163463?text=Olá,%20quero%20o%20código%20da%20lista"
      target="_blank">
      📲 Pedir código no WhatsApp
   </a>
-
 </div>
 
-<!-- 🛍️ SITE -->
 <div id="conteudo">
 
   <h1>🎁 Lista de Casamento</h1>
 
   <div class="container">
 
-    <!-- GELADEIRA -->
     <div class="item">
-      <img src="GELADEIRA/GELADEIRINHA.gif" class="produto">
-
+      <img src="Geladeira/Geladeira.gif" class="produto">
       <div class="info">
         <strong>Geladeira Duplex Inox</strong><br><br>
-
-        <a href="https://www.magazineluiza.com.br/" target="_blank">Ver produto</a><br><br>
-
         <button onclick="marcar(this)">Disponível</button>
       </div>
     </div>
 
-    <!-- TV -->
     <div class="item">
-      <img src="Smart TV 50/Smart TV 50.gif" class="produto">
-
+      <img src="Tv/Tv.gif" class="produto">
       <div class="info">
         <strong>Smart TV 50"</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
 
-        <a href="https://www.amazon.com.br/" target="_blank">Ver produto</a><br><br>
+    <div class="item">
+      <img src="Fogao/Fogao.gif" class="produto">
+      <div class="info">
+        <strong>Fogão</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
 
+    <div class="item">
+      <img src="Mesa/Mesa.gif" class="produto">
+      <div class="info">
+        <strong>Mesa</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="Microondas/Microondas.gif" class="produto">
+      <div class="info">
+        <strong>Microondas</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="Panelas/Panelas.gif" class="produto">
+      <div class="info">
+        <strong>Panelas</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="Pix/Pix.gif" class="produto">
+      <div class="info">
+        <strong>Pix</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="Sofa/Sofa.gif" class="produto">
+      <div class="info">
+        <strong>Sofá</strong><br><br>
+        <button onclick="marcar(this)">Disponível</button>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="Tanquinho/Tanquinho.gif" class="produto">
+      <div class="info">
+        <strong>Tanquinho</strong><br><br>
         <button onclick="marcar(this)">Disponível</button>
       </div>
     </div>
@@ -183,50 +206,41 @@ button:hover {
 
 </div>
 
-<!-- 🎯 CURSOR ANIMADO -->
 <img src="Mouse/Aliancas move.gif" id="cursor">
 
 <script>
 
-/* ===== CÓDIGOS ===== */
+/* CÓDIGOS */
 const codigos = {
-  "TESTE": "1234",
-  "ADREIL/SORIANE": "2010",
-  "carlos": "9999"
+  "Carlos": "9999",
+  "Maria": "1234",
+  "João": "5678"
 };
 
-/* ===== LOGIN ===== */
+/* LOGIN */
 function validar() {
   let input = document.getElementById("codigo").value.trim();
-  let autorizado = false;
 
-  for (let pessoa in codigos) {
-    if (codigos[pessoa] === input) {
-      autorizado = true;
-      break;
+  for (let nome in codigos) {
+    if (codigos[nome] === input) {
+
+      document.getElementById("bloqueio").style.display = "none";
+      document.getElementById("conteudo").style.display = "block";
+
+      return;
     }
   }
 
-  if (autorizado) {
-    document.getElementById("bloqueio").style.display = "none";
-    document.getElementById("conteudo").style.display = "block";
-  } else {
-    alert("Código inválido!");
-  }
+  alert("Código inválido!");
 }
 
-/* ===== BOTÃO ===== */
+/* BOTÃO */
 function marcar(btn) {
-  if (btn.innerText === "Disponível") {
-    btn.innerText = "Comprado";
-    btn.classList.add("comprado");
-  } else {
-    btn.innerText = "Disponível";
-    btn.classList.remove("comprado");
-  }
+  btn.innerText = "Comprado";
+  btn.classList.add("comprado");
 }
 
-/* ===== CURSOR SEGUINDO O MOUSE ===== */
+/* CURSOR */
 const cursor = document.getElementById("cursor");
 
 document.addEventListener("mousemove", (e) => {
@@ -234,17 +248,9 @@ document.addEventListener("mousemove", (e) => {
   cursor.style.top = e.pageY + "px";
 });
 
-/* MOSTRAR SÓ EM ELEMENTOS CLICÁVEIS */
 document.querySelectorAll("a, button, img").forEach(el => {
-
-  el.addEventListener("mouseenter", () => {
-    cursor.style.display = "block";
-  });
-
-  el.addEventListener("mouseleave", () => {
-    cursor.style.display = "none";
-  });
-
+  el.addEventListener("mouseenter", () => cursor.style.display = "block");
+  el.addEventListener("mouseleave", () => cursor.style.display = "none");
 });
 
 </script>
