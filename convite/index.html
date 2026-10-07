@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Convite de Casamento - Sérgio e Karina</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        background: #111;
+        width: 100%;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    #convite {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    #carregando {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+    }
+</style>
+</head>
+
+<body>
+
+<div id="convite">
+    <div id="carregando">Carregando convite...</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    const url = "../convite.pdf";
+    const container = document.getElementById("convite");
+
+    pdfjsLib.getDocument(url).promise.then(async pdf => {
+
+        document.getElementById("carregando").remove();
+
+        for (let pagina = 1; pagina <= pdf.numPages; pagina++) {
+
+            const page = await pdf.getPage(pagina);
+
+            const larguraDisponivel =
+                Math.min(container.clientWidth, 900);
+
+            const viewportOriginal =
+                page.getViewport({ scale: 1 });
+
+            const escala =
+                larguraDisponivel / viewportOriginal.width;
+
+            const viewport =
+                page.getViewport({ scale: escala });
+
+            const canvas =
+                document.createElement("canvas");
+
+            const contexto =
+                canvas.getContext("2d");
+
+            const proporcao =
+                window.devicePixelRatio || 1;
+
+            canvas.width =
+                viewport.width * proporcao;
+
+            canvas.height =
+                viewport.height * proporcao;
+
+            canvas.style.width =
+                viewport.width + "px";
+
+            canvas.style.height =
+                viewport.height + "px";
+
+            contexto.setTransform(
+                proporcao,
+                0,
+                0,
+                proporcao,
+                0,
+                0
+            );
+
+            container.appendChild(canvas);
+
+            await page.render({
+                canvasContext: contexto,
+                viewport: viewport
+            }).promise;
+        }
+
+    }).catch(erro => {
+
+        container.innerHTML = `
+            <div style="
+                color:white;
+                font-family:Arial;
+                text-align:center;
+                padding:40px;
+            ">
+                Erro ao carregar o convite.
+                <br><br>
+                ${erro.message}
+            </div>
+        `;
+
+        console.error(erro);
+    });
+</script>
+
+</body>
+</html>
