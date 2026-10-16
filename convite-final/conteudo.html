@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convite de Casamento — Sérgio e Karina</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#181818;font-family:Arial,sans-serif}
+.topbar{position:sticky;top:0;z-index:10;background:#181818;padding:12px;text-align:center;border-bottom:1px solid #333}
+.button{display:inline-block;padding:13px 24px;border:0;border-radius:8px;background:#8b35ad;color:#fff;font-size:16px;font-weight:bold;text-decoration:none;cursor:pointer}
+.button:hover{background:#a747ca}#status{margin:10px;color:#fff;font-size:14px}
+#pages{width:100%;padding:10px 8px}.pdf-page{position:relative;margin:0 auto 18px;max-width:100%}
+.pdf-page canvas{display:block;width:100%;height:auto}.links{position:absolute;inset:0;pointer-events:none}
+.pdf-link{position:absolute;display:block;pointer-events:auto;cursor:pointer}.pdf-link:hover{background:rgba(40,110,255,.10)}
+.pdf-link:focus-visible{outline:3px solid #1769ff}
+</style>
+</head>
+<body>
+<div class="topbar"><a class="button" href="./">VOLTAR À PRIMEIRA PÁGINA</a><div id="status">Carregando conteúdo do convite...</div></div>
+<main id="pages"></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(async function(){
+ const status=document.getElementById('status');const container=document.getElementById('pages');
+ try{
+  if(!window.pdfjsLib)throw new Error('Não foi possível carregar o visualizador. Verifique a conexão.');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // Segunda parte da ordem: convite-completo.pdf. Os links são desenhados sobre a página do PDF.
+  const pdf=await pdfjsLib.getDocument('./convite-completo.pdf').promise;
+  for(let n=1;n<=pdf.numPages;n++){
+   status.textContent='Conteúdo · página '+n+' de '+pdf.numPages;
+   await renderPage(pdf,n,container);
+  }
+  status.textContent='Conteúdo carregado · '+pdf.numPages+' página(s).';
+ }catch(e){status.textContent='Erro ao carregar convite-completo.pdf: '+e.message;console.error(e)}
+})();
+async function renderPage(pdf,n,container){
+ const page=await pdf.getPage(n);const width=Math.min(Math.max(window.innerWidth-16,280),1000);
+ const viewport=page.getViewport({scale:width/page.getViewport({scale:1}).width});const ratio=window.devicePixelRatio||1;
+ const wrap=document.createElement('section');wrap.className='pdf-page';wrap.style.width=viewport.width+'px';wrap.style.maxWidth='100%';
+ const canvas=document.createElement('canvas');canvas.width=Math.round(viewport.width*ratio);canvas.height=Math.round(viewport.height*ratio);canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';
+ const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);wrap.appendChild(canvas);
+ const layer=document.createElement('div');layer.className='links';wrap.appendChild(layer);container.appendChild(wrap);
+ await page.render({canvasContext:ctx,viewport}).promise;
+ const annotations=await page.getAnnotations({intent:'display'});
+ for(const a of annotations){if(a.subtype!=='Link')continue;const url=a.url||a.unsafeUrl;if(!url||!/^https?:\/\//i.test(url))continue;
+  const r=viewport.convertToViewportRectangle(a.rect);const link=document.createElement('a');link.className='pdf-link';link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.title='Abrir link do convite';link.setAttribute('aria-label','Abrir link do convite');link.style.left=Math.min(r[0],r[2])+'px';link.style.top=Math.min(r[1],r[3])+'px';link.style.width=Math.abs(r[2]-r[0])+'px';link.style.height=Math.abs(r[3]-r[1])+'px';layer.appendChild(link);
+ }
+}
+</script>
+</body>
+</html>
